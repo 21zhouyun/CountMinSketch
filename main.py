@@ -74,4 +74,6 @@ if __name__ == '__main__':
     print "--- %s seconds ---" % (time.time() - start_time)
     print len(results)
     print "Reducing matrices"
+    M = reduce(np.add, results)
+    print M
 
