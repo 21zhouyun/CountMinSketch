@@ -5,6 +5,8 @@ This is a python implementation of the count min sketch algorithm. The original 
 ##### Usage
 To construct an CountMinSketch object, you need to supply three parameters.
 ```python
+from hashfactory import hash_function
+
 depth = 8
 width = 2**22
 hash_functions = [hash_function(i) for i in range(DEPTH)]
