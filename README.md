@@ -14,6 +14,4 @@ sketch = CountMinSketch(depth, width, hash_functions)
 Notice that under the hood, the hashtable is implemented as a numpy matrix. This provide a rather simple way run multiple CountMinSketch objects in parallel and merge the results together.
 
 ##### Example
-In main.py, I include an example of using 8 CountMinSketch objects to count the word frequency of an entire wikipedia dump. The dump is preprocessed into 8 chunks using a modified version of [WikiExtractor](https://github.com/attardi/wikiextractor)(added functionality to output timestamp information).
-
-However, if your task is IO bounded, such parallelism would not help much unless you preprocess the 
+In main.py, I include an example of using 8 CountMinSketch objects to count the word frequency of an entire wikipedia dump. The dump is preprocessed into 8 chunks using a modified version of [WikiExtractor](https://github.com/attardi/wikiextractor)(added functionality to output timestamp information). The preprocessing is necessary because the hashing is very fast and the task is mostly IO bound. The speed up gained from the parallelism is mainly from the parallel reading of the dump.
