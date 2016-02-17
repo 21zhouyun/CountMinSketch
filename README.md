@@ -17,3 +17,16 @@ Notice that under the hood, the hashtable is implemented as a numpy matrix. This
 
 ##### Example
 In main.py, I include an example of using 8 CountMinSketch objects to count the word frequency of an entire wikipedia dump. The dump is preprocessed into 8 chunks using a modified version of [WikiExtractor](https://github.com/attardi/wikiextractor)(added functionality to output timestamp information). The preprocessing is necessary because the hashing is very fast and the task is mostly IO bound. The speed up gained from the parallelism is mainly from the parallel reading of the dump.
+
+##### Other files:
+######gpu_countminsketch.py:
+
+I tried to the massive parallelism provided by a GPU to speed up the hashing process. There are two main concerns:
+
+1. Since the hashing function need access to entire M matrix, this is not a typical problem that can be chunked and feed to a GPU and get massive speedup. As you can see in the opencl kernel I wrote, I used an atomic_add to solve the race problem. However, if the collision rate is high, the GPU implementation may degenerate into a slower sequential version of CMS.
+ 
+2. Since calculating a hash function is not very time consuming, the time used to copy the memory from CPU to GPU may be the dominating factor. In fact, in my own experient, the GPU implementation is slower than a single thread CPU implementation on the same data.
+
+######hashfactory.py:
+
+A simple utility that generate hash functions.
