@@ -13,7 +13,7 @@ hash_functions = [hash_function(i) for i in range(depth)]
 sketch = CountMinSketch(depth, width, hash_functions)
 ```
 
-Notice that under the hood, the hashtable is implemented as a numpy matrix. This provide a rather simple way run multiple CountMinSketch objects in parallel and merge the results together.
+Notice that under the hood of this implementation is a numpy matrix. This provide a rather simple way run multiple CountMinSketch objects in parallel and merge the results together.
 
 ##### Example
 In main.py, I include an example of using 8 CountMinSketch objects to count the word frequency of an entire wikipedia dump. The dump is preprocessed into 8 chunks using a modified version of [WikiExtractor](https://github.com/attardi/wikiextractor)(added functionality to output timestamp information). The preprocessing is necessary because the hashing is very fast and the task is mostly IO bound. The speed up gained from the parallelism is mainly from the parallel reading of the dump.
@@ -29,4 +29,4 @@ I tried to leverage the massive parallelism provided by a GPU to speed up the ha
 
 ######hashfactory.py:
 
-A simple utility that generate hash functions.
+A simple utility that generate hash functions. For the gpu_hash_function, you need to store the random seed you used to generate the rand parameter. You will need it when querying the generated sketch.
