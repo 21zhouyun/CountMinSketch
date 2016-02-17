@@ -9,7 +9,7 @@ from hashfactory import hash_function
 
 depth = 8
 width = 2**22
-hash_functions = [hash_function(i) for i in range(DEPTH)]
+hash_functions = [hash_function(i) for i in range(depth)]
 sketch = CountMinSketch(depth, width, hash_functions)
 ```
 
