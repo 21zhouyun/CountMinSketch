@@ -21,7 +21,7 @@ In main.py, I include an example of using 8 CountMinSketch objects to count the 
 ##### Other files:
 ######gpu_countminsketch.py:
 
-I tried to the massive parallelism provided by a GPU to speed up the hashing process. There are two main concerns:
+I tried to leverage the massive parallelism provided by a GPU to speed up the hashing process. There are two main concerns:
 
 1. Since the hashing function need access to entire M matrix, this is not a typical problem that can be chunked and feed to a GPU and get massive speedup. As you can see in the opencl kernel I wrote, I used an atomic_add to solve the race problem. However, if the collision rate is high, the GPU implementation may degenerate into a slower sequential version of CMS.
  
